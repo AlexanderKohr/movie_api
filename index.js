@@ -19,7 +19,7 @@ app.get('/movies', (req, res) => {
     res.json('My top 10 movies.');
 });
 
-// Function to serve all static files inside on folder
+// Function to serve all static files inside one folder
 app.use(express.static('public'));
 
 
