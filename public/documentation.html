@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/styles.css" type="text/css">
     <title>Document</title>
 </head>
 <body>
@@ -11,5 +13,104 @@
     <p>The web application will provide users with access to information about different
         movies, directors, and genres. Users will be able to sign up, update their
         personal information, and create a list of their favorite movies.</p>
+
+        <table class="table table-bordered table-responsive">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Business Logic</th>
+                <th scope="col">URL</th>
+                <th scope="col">HTTP Method</th>
+                <th scope="col">Request body data format</th>
+                <th scope="col">Response body data format</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Add a user</th>
+                <td>/users</td>
+                <td>POST</td>
+                <td>A JSON object holding data about a user to add, structured like:<br>
+                    {   <br>
+                        "name": "Kim"<br>
+                    }</td>
+                <td>A JSON object holding data about user that was added, including an ID:<br>
+                    {   <br>
+                        id: 1,<br>
+                        name: "Jeff",<br>
+                        favoriteMovies: []<br>
+
+                    }</td>
+              </tr>
+              <tr>
+                <th scope="row">Find user by ID and update user name</th>
+                <td>/users/:id</td>
+                <td>PUT</td>
+                <td>A JSON object holding data about a user to change name, structured like:<br>
+                    {   <br>
+                        "name": "Jeff"<br>
+                    }</td>
+                <td>A JSON object holding data about a user's changed name:<br>
+                    {   <br>
+                        id: 1,<br>
+                        name: "Jeff",<br>
+                        favoriteMovies: []<br>
+
+                    }</td>
+              </tr>
+              <tr>
+                <th scope="row">Remove a user by ID</th>
+                <td>/users/:id</td>
+                <td>DELETE</td>
+                <td>none</td>
+                <td>A message indicating whether the user was successfully removed</td>
+              </tr>
+              <tr>
+                <th scope="row">Add a movie to user's favorite movies array</th>
+                <td>/users/:id/:movieTitle</td>
+                <td>POST</td>
+                <td>none</td>
+                <td>A message indicating whether the movie was successfully added</td>
+              </tr>
+              <tr>
+                <th scope="row">Remove a movie from user's favorite movies array</th>
+                <td>/users/:id/:movieTitle</td>
+                <td>DELETE</td>
+                <td>none</td>
+                <td>A message indicating whether the movie was successfully removed</td>
+              </tr>
+              <tr>
+                <th scope="row">Get a list of all movies</th>
+                <td>/movies</td>
+                <td>GET</td>
+                <td>none</td>
+                <td>A JSON object holding data about all the movies</td>
+              </tr>
+              <tr>
+                <th scope="row">Get data about a single movie by title</th>
+                <td>/movies/:title</td>
+                <td>GET</td>
+                <td>none</td>
+                <td>A JSON object holding data about the movie</td>
+              </tr>
+              <tr>
+                <th scope="row">Get data about a genre</th>
+                <td>/movies/genre/:genreName</td>
+                <td>GET</td>
+                <td>none</td>
+                <td>A JSON object holding data about the genre</td>
+              </tr>
+              <tr>
+                <th scope="row">Get data about a director</th>
+                <td>/movies/directors/:directorName</td>
+                <td>GET</td>
+                <td>none</td>
+                <td>A JSON object holding data about the director</td>
+              </tr>
+            </tbody>
+          </table>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
