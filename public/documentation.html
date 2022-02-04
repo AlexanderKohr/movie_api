@@ -26,85 +26,128 @@
             </thead>
             <tbody>
               <tr>
+                <th scope="row">Get a list of all users</th>
+                <td>/users</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object holding data about all users, structured like:<br>
+                {<br>
+                  {<br>
+                    "_id": "61fa66e89526ff993d4b0ab7",<br>
+                    "Username": "Adrian Khachaturian",<br>
+                    "Password": "password1234",<br>
+                    "Email": "adriank@yahoo.com",<br>
+                    "Birthday": "1955-02-06T00:00:00.000Z",<br>
+                      "FavoriteMovies": []<br>
+                  },<br>
+                  {<br>
+                      "_id": "61fa66f09526ff993d4b0ab8",<br>
+                      "Username": "Lucianus Sheppard",<br>
+                      "Password": "sheplucianus",<br>
+                      "Email": "lucianusshep@yahoo.com",<br>
+                      "Birthday": "1977-05-12T00:00:00.000Z",<br>
+                      "FavoriteMovies": []<br>
+                  }<br>
+                }</td>
+              </tr>
+              <tr>
                 <th scope="row">Add a user</th>
                 <td>/users</td>
                 <td>POST</td>
-                <td>A JSON object holding data about a user to add, structured like:<br>
-                    {   <br>
-                        "name": "Kim"<br>
-                    }</td>
-                <td>A JSON object holding data about user that was added, including an ID:<br>
-                    {   <br>
-                        id: 1,<br>
-                        name: "Jeff",<br>
-                        favoriteMovies: []<br>
-
-                    }</td>
+                <td>A JSON object holding data about a user to add, structured like:
+                  {<br>
+                    "Username": "testUser",<br>
+                    "Password": "1234567",<br>
+                    "Email": "testUser@yahoo.com",<br>
+                    "Birthday": "1950-04-25",<br>
+                }
+                </td>
+                <td>A JSON object holding data about the user that has been just added, structured like:<br>
+                  {
+                    "_id": "61fa66df9526ff993d4b0ab6",
+                    "Username": "Iael Cuoco",
+                    "Password": "bubble",
+                    "Email": "iaelcouco@yahoo.com",
+                    "Birthday": "1973-06-03T00:00:00.000Z",
+                    "FavoriteMovies": []
+                }</td>
               </tr>
               <tr>
-                <th scope="row">Find user by ID and update user name</th>
-                <td>/users/:id</td>
+                <th scope="row">Find user by username and update data</th>
+                <td>/users</td>
                 <td>PUT</td>
-                <td>A JSON object holding data about a user to change name, structured like:<br>
-                    {   <br>
-                        "name": "Jeff"<br>
-                    }</td>
-                <td>A JSON object holding data about a user's changed name:<br>
-                    {   <br>
-                        id: 1,<br>
-                        name: "Jeff",<br>
-                        favoriteMovies: []<br>
-
-                    }</td>
+                <td>A JSON object holding data about a user to change data, structured like:<br>
+                  {<br>
+                    "Username": "testUser",<br>
+                    "Password": "1234567",<br>
+                    "Email": "testUser@yahoo.com",<br>
+                    "Birthday": "1950-04-25",<br>
+                }</td>
+                <td>A JSON object holding data about users updated data, structured like:<br>
+                  {
+                    "_id": "61fa65249526ff993d4b0ab4",
+                    "Username": "testUser",
+                    "Password": "changedPassword",
+                    "Email": "testUser@yahoo.com",
+                    "Birthday": "1950-04-25T00:00:00.000Z",
+                    "FavoriteMovies": []
+                },</td>
               </tr>
               <tr>
-                <th scope="row">Remove a user by ID</th>
-                <td>/users/:id</td>
+                <th scope="row">Remove a user by username</th>
+                <td>/users/:Username</td>
                 <td>DELETE</td>
                 <td>none</td>
                 <td>A message indicating whether the user was successfully removed</td>
               </tr>
               <tr>
                 <th scope="row">Add a movie to user's favorite movies array</th>
-                <td>/users/:id/:movieTitle</td>
+                <td>/users/:Username/movies/:MovieID</td>
                 <td>POST</td>
                 <td>none</td>
                 <td>A message indicating whether the movie was successfully added</td>
               </tr>
               <tr>
                 <th scope="row">Remove a movie from user's favorite movies array</th>
-                <td>/users/:id/:movieTitle</td>
+                <td>/users/:Username/movies/:MovieID</td>
                 <td>DELETE</td>
                 <td>none</td>
                 <td>A message indicating whether the movie was successfully removed</td>
               </tr>
               <tr>
-                <th scope="row">Get a list of all movies</th>
+                <th scope="row">Return a list of all movies</th>
                 <td>/movies</td>
                 <td>GET</td>
                 <td>none</td>
-                <td>A JSON object holding data about all the movies</td>
+                <td>A JSON object holding data about all movies</td>
               </tr>
               <tr>
                 <th scope="row">Get data about a single movie by title</th>
-                <td>/movies/:title</td>
+                <td>/movies/:Title</td>
                 <td>GET</td>
                 <td>none</td>
                 <td>A JSON object holding data about the movie</td>
               </tr>
               <tr>
-                <th scope="row">Get data about a genre</th>
-                <td>/movies/genre/:genreName</td>
+                <th scope="row">Get the description of a genre</th>
+                <td>/genre/:Name</td>
                 <td>GET</td>
                 <td>none</td>
-                <td>A JSON object holding data about the genre</td>
+                <td>A JSON object holding the description of the genre</td>
               </tr>
               <tr>
-                <th scope="row">Get data about a director</th>
-                <td>/movies/directors/:directorName</td>
+                <th scope="row">Get data about a director (Bio, Birthyear, Deathyear)</th>
+                <td>/director/:Name</td>
                 <td>GET</td>
                 <td>none</td>
-                <td>A JSON object holding data about the director</td>
+                <td>A JSON object holding data about the director, structured like:<br>
+                  {<br>
+                    "Name": "Alejandro G. Iñárritu",<br>
+                    "Bio": "Alejandro González Iñárritu (ih-nyar-ee-too), born August 15th, 1963, is a Mexican film director. González Iñárritu is the first Mexican director to be nominated for the Academy Award for Best Director and by the Directors Guild of America for Best Director. He is also the first Mexican-born director to have won the Prix de la mise en scene or best director award at Cannes (2006), the second one being Carlos Reygadas in 2012.",<br>
+                    "Birth": "1963",<br>
+                    "Death": ""<br>
+                }
+                </td>
               </tr>
             </tbody>
           </table>
