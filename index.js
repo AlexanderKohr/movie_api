@@ -19,22 +19,6 @@ const express = require('express'),
 const req = require('express/lib/request');
 const res = require('express/lib/response');
 
-
-/* 
-let users = [
-    {
-        id: 1,
-        name: "Kim",
-        favoriteMovies: []
-    },
-    {
-        id: 2,
-        name: "Joe",
-        favoriteMovies: ["The Matrix"]
-    }
-];
-*/
-
 /*
 let movies = [
     {
