@@ -1,3 +1,22 @@
+// requires cors to controll domains that are allowed to use the API
+const cors = require('cors');
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+app.use(cors({
+    origin: (origin, callback) => {
+        if(!origin) return callback(null, true);
+        if(allowedOrigins.indexOf(origin) === -1){
+            let message = 'The CORS policy for this application does not allow access from origin ' + origin;
+            return callback(new Error(message), false);
+        }
+        return callback(null, true);
+    }
+}));
+
+// requires express validator to validate user input on the server side
+const { check, validationResult } = require('express-validator');
+
+
+
 // requires the Mongoose package and the Mongoose Models created in models.js
 const mongoose = require('mongoose');
 const Models = require('./models.js');
@@ -110,7 +129,24 @@ app.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
   Email: String,
   Birthday: Date
 }*/
-app.post('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.post('/users', [
+
+    // checks that the fields contain something, then checks that the data follows the correct format
+    check('Username', 'Username is required').isLength({min: 5}),
+    check('Username', 'Username contains non alphanumeric character - not allowed').isAlphanumeric(),
+    check('Password', 'Password is required').not().isEmpty(),
+    check('Email', 'Email does not appear to be valid').isEmail()
+
+], (req, res) => {
+
+    // checks the validation object for errors
+    let errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+    }
+    // hashes any password enteres by the iser when registering before storing it in the MongoDB database
+    let hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOne({ Username: req.body.Username })
     .then((user) => {
         // if user already exists, this message will be returned
@@ -121,7 +157,7 @@ app.post('/users', passport.authenticate('jwt', { session: false }), (req, res) 
             Users
                 .create({
                     Username: req.body.Username,
-                    Password: req.body.Password,
+                    Password: hashedPassword,
                     Email: req.body.Email,
                     Birthday: req.body.Birthday
                 })
@@ -186,7 +222,15 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (r
 });
 
 // updates the data of a specific user
-app.put('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.put('/users/:Username', passport.authenticate('jwt', { session: false }),[
+
+        // checks that the fields contain something, then checks that the data follows the correct format
+        check('Username', 'Username is required').isLength({min: 5}),
+        check('Username', 'Username contains non alphanumeric character - not allowed').isAlphanumeric(),
+        check('Password', 'Password is required').not().isEmpty(),
+        check('Email', 'Email does not appear to be valid').isEmail()
+
+    ], (req, res) => {
     Users.findOneAndUpdate({ Username: req.params.Username },
         { $set: {
             Username: req.body.Username,
@@ -300,6 +344,7 @@ app.use((err, req, res, next) => {
 });
 
 // Server listens to Port 8080. For HTTP Port 80 is the default Port
-app.listen(8080, () => {
-    console.log('Your app is listening to Port 8080.');
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0', () => {
+    console.log('Listening on Port ' + port);
 });
