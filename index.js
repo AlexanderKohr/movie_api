@@ -25,6 +25,7 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users= Models.User;
 
+
 // allows Mongoose to connect to database myFlixDB
 // so it can perform CRUD operations on the documents it contains from within the REST API.
 /*mongoose.connect('mongodb://localhost:27017/myFlixDB', 
