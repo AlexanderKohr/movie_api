@@ -1,3 +1,15 @@
+// Imports the express module and the Morgan module
+const express = require('express'),
+    morgan = require('morgan'),
+    bodyParser = require('body-parser'),
+    uuid = require('uuid');
+const req = require('express/lib/request');
+const res = require('express/lib/response');
+
+
+// after importing express it needs to be added to the app in order to start using it
+const app = express();
+
 // requires cors to controll domains that are allowed to use the API
 const cors = require('cors');
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
@@ -34,77 +46,6 @@ const Users= Models.User;
 mongoose.connect('process.env.CONNECTION_URI', 
     { useNewUrlParser: true, useUnifiedTopology: true});
 
-
-// Imports the express module and the Morgan module
-const express = require('express'),
-    morgan = require('morgan'),
-    bodyParser = require('body-parser'),
-    uuid = require('uuid');
-const req = require('express/lib/request');
-const res = require('express/lib/response');
-
-/*
-let movies = [
-    {
-        "Title": "The Matrix",
-        "Genre": {
-            "Name": "Sci-Fi"
-        },
-        "Director": {
-            "Name": "Lana Wachowski"
-        }
-    },
-    {
-        "Title": "Pi",
-        "Genre": {
-            "Name": "Drama"
-        },
-        "Director": {
-            "Name": "Darren Aronofsky"
-        }
-    },
-    {
-        "Title": "American Beauty",
-        "Genre": {
-            "Name": "Drama"
-        },
-        "Director": {
-            "Name": "Sam Mendes"
-        } 
-    },
-    {
-        "Title": "Eternal Sunshine of the Spotless Mind",
-        "Genre": {
-            "Name": "Drama"
-        },
-        "Director": {
-            "Name": "Michel Gondry"
-        } 
-    },
-    {
-        "Title": "Shutter Island",
-        "Genre": {
-            "Name": "Thriller"
-        },
-        "Director": {
-            "Name": "Martin Scorsese"
-        } 
-    },
-    {
-        "Title": "Fight Club",
-        "Genre": {
-            "Name": "Drama"
-        },
-        "Director": {
-            "Name": "David Fincher"
-        } 
-    }
-]
-*/
-
-
-// after importing express it needs to be added to the app in order to start using it
-const app = express();
 
 // reads the data out of the request body 
 app.use(bodyParser.json());
