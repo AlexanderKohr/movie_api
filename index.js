@@ -27,8 +27,12 @@ const Users= Models.User;
 
 // allows Mongoose to connect to database myFlixDB
 // so it can perform CRUD operations on the documents it contains from within the REST API.
-mongoose.connect('mongodb://localhost:27017/myFlixDB', 
+/*mongoose.connect('mongodb://localhost:27017/myFlixDB', 
+    { useNewUrlParser: true, useUnifiedTopology: true});*/
+
+mongoose.connect('process.env.CONNECTION_URI', 
     { useNewUrlParser: true, useUnifiedTopology: true});
+
 
 // Imports the express module and the Morgan module
 const express = require('express'),
