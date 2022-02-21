@@ -11,6 +11,7 @@ const res = require('express/lib/response');
 const app = express();
 
 // requires cors to controll domains that are allowed to use the API
+/*
 const cors = require('cors');
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 app.use(cors({
@@ -23,6 +24,7 @@ app.use(cors({
         return callback(null, true);
     }
 }));
+*/
 
 // requires express validator to validate user input on the server side
 const { check, validationResult } = require('express-validator');
@@ -50,6 +52,10 @@ mongoose.connect('process.env.CONNECTION_URI',
 // reads the data out of the request body 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+// requires cors
+const cors = require('cors');
+app.use(cors());
 
 // imports the auth.js file into the project
 // the (app) argument ensures that Express is availible in auth.js file as well
