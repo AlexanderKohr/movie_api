@@ -1,14 +1,18 @@
 // Imports the express module and the Morgan module
 const express = require('express'),
-    morgan = require('morgan'),
     bodyParser = require('body-parser'),
-    uuid = require('uuid');
+    uuid = require('uuid'),
+    http = require('http'),
+    url = require('url'),
+    morgan = require('morgan'),
+    // requires the Mongoose package and the Mongoose Models created in models.js
+    mongoose = require('mongoose'),
+    // requires express validator to validate user input on the server side
+    { check, validationResult } = require('express-validator');
+    
+    
 const req = require('express/lib/request');
 const res = require('express/lib/response');
-
-
-// after importing express it needs to be added to the app in order to start using it
-const app = express();
 
 // requires cors to controll domains that are allowed to use the API
 /*
@@ -26,36 +30,42 @@ app.use(cors({
 }));
 */
 
-// requires express validator to validate user input on the server side
-const { check, validationResult } = require('express-validator');
-
-
-
-// requires the Mongoose package and the Mongoose Models created in models.js
-const mongoose = require('mongoose');
 const Models = require('./models.js');
-
 // refereing to the model names defined in models.js
 const Movies = Models.Movie;
 const Users= Models.User;
-
 
 // allows Mongoose to connect to database myFlixDB
 // so it can perform CRUD operations on the documents it contains from within the REST API.
 /*mongoose.connect('mongodb://localhost:27017/myFlixDB', 
     { useNewUrlParser: true, useUnifiedTopology: true});*/
 
-mongoose.connect('process.env.CONNECTION_URI', 
+    mongoose.connect('process.env.CONNECTION_URI', 
     { useNewUrlParser: true, useUnifiedTopology: true});
 
+// after importing express it needs to be added to the app in order to start using it
+const app = express();
 
 // reads the data out of the request body 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+// Morgan middleware library in use to log all requests to the terminal
+app.use(morgan('common'));
+// Function to serve all static files inside one folder
+app.use(express.static('public'));
 
 // requires cors
 const cors = require('cors');
-app.use(cors());
+app.use(cors({
+    origin: (origin, callback) => {
+      if(!origin) return callback(null, true);
+      if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin is not found on the list of allowed origins
+        let message = 'The CORS policy for this application does not allow access from origin ' + origin;
+        return callback(new Error(message), false);
+      }
+      return callback(null, true);
+    }
+  }));
 
 // imports the auth.js file into the project
 // the (app) argument ensures that Express is availible in auth.js file as well
@@ -65,8 +75,6 @@ let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
 
-// Morgan middleware library in use to log all requests to the terminal
-app.use(morgan('common'));
 
 app.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
     res.send('Welcome to myFlix!');
@@ -284,9 +292,6 @@ app.get('/director/:Name', passport.authenticate('jwt', { session: false }), (re
             res.status(500).send('Error: ' + err);
         });
 });
-
-// Function to serve all static files inside one folder
-app.use(express.static('public'));
 
 
 // Error-handling middleware function that will log all application-level errors to the terminal
