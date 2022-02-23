@@ -76,8 +76,8 @@ const passport = require('passport');
 require('./passport');
 
 
-app.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
-    res.send('Welcome to myFlix!');
+app.get('/', (req, res) => {
+    res.send('Welcome to my movie API');
 });
 
 //Add a user
