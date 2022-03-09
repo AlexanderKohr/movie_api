@@ -113,7 +113,7 @@ app.post('/users', [
     .then((user) => {
         // if user already exists, this message will be returned
         if (user) {
-            return res.status(400).send(rep.body.Username + 'already exists');
+            return res.status(400).send(req.body.Username + 'already exists');
         } else {
             // if user does not exist, it will create a new user document in Users collection
             Users
