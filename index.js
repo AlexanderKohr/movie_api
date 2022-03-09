@@ -247,7 +247,7 @@ app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { se
 
 
 // READ route located at endpoint '/movies', returning .json object with all movies
-app.get('/movies', function (req, res) {
+app.get('/movies', passport.authenticate('jwt', { session:false}), function (req, res) {
     Movies.find()
         .then(function (movies) {
             res.status(201).json(movies);
