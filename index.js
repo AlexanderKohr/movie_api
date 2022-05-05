@@ -54,7 +54,7 @@ app.use(morgan('common'));
 // Function to serve all static files inside one folder
 app.use(express.static('public'));
 
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'http://localhost:1234'];
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'http://localhost:1234', 'http://localhost:4200'];
 
 // requires cors
 const cors = require('cors');
