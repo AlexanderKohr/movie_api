@@ -54,7 +54,12 @@ app.use(morgan('common'));
 // Function to serve all static files inside one folder
 app.use(express.static('public'));
 
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'http://localhost:1234', 'http://localhost:4200'];
+let allowedOrigins = [
+    'http://localhost:8080',
+    'http://localhost:1234',
+    'http://localhost:4200',
+    'https://alexanderkohr.github.io/myFlix-Angular-client/',
+];
 
 // requires cors
 const cors = require('cors');
