@@ -33,7 +33,7 @@ app.use(cors({
 const Models = require('./models.js');
 // refereing to the model names defined in models.js
 const Movies = Models.Movie;
-const Users= Models.User;
+const Users = Models.User;
 
 // allows Mongoose to connect to database myFlixDB
 // so it can perform CRUD operations on the documents it contains from within the REST API.
@@ -235,7 +235,7 @@ app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { sess
 
 
 // deletes a movie from a users list of favorite movies
-app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.delete('/users/:Username/FavoriteMovies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.findOneAndUpdate({ Username: req.params.Username }, 
         { $pull: { FavoriteMovies: req.params.MovieID }
     },
