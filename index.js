@@ -217,6 +217,22 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),[
     });
 });
 
+// Endpoint to GET a user's favorite movies
+app.get('/users/:Username/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
+    Users.findOne({ Username: req.params.Username })
+      .populate({
+        path: 'FavoriteMovies',
+        populate: [{ path: 'Genre'}, { path: 'Director'}]
+      })
+      .then((user) => {
+        res.status(200).json(user);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      });
+  });
+
 // adds a movie to a users list of favorite movies
 app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.findOneAndUpdate({ Username: req.params.Username }, 
