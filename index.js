@@ -59,7 +59,7 @@ let allowedOrigins = [
     'http://localhost:1234',
     'http://localhost:4200',
     'https://alexanderkohr.github.io',
-    'https://movieanorak.netlify.app/'
+    'https://movieanorak.netlify.app'
 ];
 
 /**
