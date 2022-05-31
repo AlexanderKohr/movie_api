@@ -59,6 +59,7 @@ let allowedOrigins = [
     'http://localhost:1234',
     'http://localhost:4200',
     'https://alexanderkohr.github.io',
+    'https://effulgent-chimera-c75f27.netlify.app/'
 ];
 
 /**
